@@ -11,7 +11,6 @@ app.use(express.static(__dirname + '/client/'));
 var router = require('./server/routes.js');
 
 
-app.listen(3000, function(){
+app.listen(3000, function() {
 	console.log('server is on.')
-
 });
