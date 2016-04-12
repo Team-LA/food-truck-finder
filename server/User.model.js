@@ -6,7 +6,10 @@ var UserSchema = new Schema({
 	password: String,
 	image: String,
 	cuisine: String,
-	locations: Array 
+	locations: [{address: String, 
+				longitude: Number,
+				latitude: Number, 
+				hours: [{}]}] //hours:[{Mon: [8, 17]}] 
 });
 
-module.exports = mongoose.model('User', UserSchema);	
+module.exports = mongoose.model('User', UserSchema);
