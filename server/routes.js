@@ -76,6 +76,15 @@ router.get('/findTrucks', function(request, response) {
 	// var latitude = request.body.latitude;
 	console.log('in findTrucks')
 	var trucks = helpers.findTrucksCurrent(request, response);
+
+
+	var results = {};
+	var originalLocation =helpers.findCurrentLocation(request, response)
+	for(var i =0; i< trucks.length; i++){
+		results[trucks[i].name] = 
+	Math.sqrt(Math.pow(Math.abs(originalLocation.latitude-trucks[i].latitude,2) + Math.pow(Math.abs(originalLocation.longitude-trucks[i].longitude,2))))
+	}	
+
 });
 
 router.get('/logout', function(request, response) {
