@@ -12,7 +12,6 @@ Name: <input>
 Cuisine: <select>
 img_url: 
 
-
 locations: <label>
 <button>add location
 address: <input>
