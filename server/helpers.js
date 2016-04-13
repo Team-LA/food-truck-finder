@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var User = require('./User.model.js');
 var jwt = require('jwt-simple');
 
-
 module.exports.userSignup = function(username, password, response) {
 
 	User.findOne({username: username}, function(err, user) {
