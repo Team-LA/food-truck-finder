@@ -97,14 +97,33 @@ module.exports.findTrucksCurrent = function(request, response) {
 	var date = new Date();
 	var day = date.getDay();
 	var time = date.getHours();
-	console.log('date', day, time);
-	// User.find({locations: {$elemMatch: {hours[day][0]:{$lt: time}, hours[day][1]:{$gte: time}]}}}, function(err, users){
-	// 	if(err) {
-	// 		console.log('error query time')
-	// 	} else {
-	// 		console.log('users', user)
-	// 	}
-	// })
+	var trucksCurrent = [];
+
+	User.find({}, function(err, users) {
+		if(err) {
+			console.error('err', err); 
+		} else {
+			//looping through all the users
+			for(var i = 0; i < users.length; i++) {
+				//looping through all the locations of every user
+				for(var j = 0; j < users[i].locations.length; j++) {
+					//if user is working today
+					if(users[i].locations[j].hours[day]) {
+						//if user is working within current hour
+						if(users[i].locations[j].hours[day][0] <= time && users[i].locations[j].hours[day][1] >= time) {
+							trucksCurrent.push(users[i]);
+						}
+
+					}
+				}
+			}
+
+				console.log('trucksCurrent', trucksCurrent)
+
+		}
+	})
+
+	return trucksCurrent;
 }
 
 module.exports.createToken = createToken = function(response, id) {
