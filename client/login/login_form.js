@@ -38,7 +38,7 @@ class LoginForm extends Component{
 		return (
 			<form onSubmit={this.Submit}>
 				<div className="input-group">
-				  Username: <input value=this.state.username} type="text"><br> 
+				  Username: <input value={this.state.username} type="text"><br> 
 				  Password: <input value={this.state.password} type="password"><br>
 				  <button> Submit </button>
 				</div>
