@@ -28,33 +28,6 @@ var db = mongoose.connection;
 // 	}
 // });
 
-
-////////////ORIGINAL/////////////////
-// var user = new User({
-// 		name: "Vons",
-// 		username: "von",
-// 		password: "von",
-// 		image: "http",
-// 		cuisine: "italy",
-// 		locations: [{address: "california", loc: {type: 'points', coordinates: [34.0210418, -118.492224]}, hours: [{1: [8, 17]}]},
-// 		{address: "new york", longitude: 234, latitude: 23, hours: [{ 2: [8, 17]}]}
-// 		]
-// });
-
-// user.save(function(err, data) {
-// 	if(err) console.log(err);
-// 	else {
-// 		console.log('success');
-// 	}
-// });
-
-// router.use(function timeLog(req, res, next) {
-//   console.log('Time: ', Date.now());
-//   next();
-// });
-
-///////////////ORIGINAL//////////////////
-
 //TODO: WHY?
 // router.get('/', function(req, res) {
 //   res.send('Birds home page');
@@ -92,10 +65,9 @@ router.post('/profile', helpers.verifyToken, function(request, response) {
 });
 
 
-router.get('/findTrucks', function(request, response) {
-	// var longitude = request.body.longitude;
-	// var latitude = request.body.latitude;
-	var trucksCurrent = helpers.findTrucksCurrent(request, response);
+router.post('/findTrucks', function(request, response) {
+
+	helpers.findTrucks(request, response);
 });
 
 router.get('/logout', function(request, response) {

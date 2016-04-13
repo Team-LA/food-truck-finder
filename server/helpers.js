@@ -2,6 +2,7 @@ var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var User = require('./User.model.js');
 var jwt = require('jwt-simple');
+var https = require('https');
 
 
 module.exports.userSignup = function(username, password, response) {
@@ -94,37 +95,50 @@ module.exports.profile = function(request, response) {
 	});
 };
 
-module.exports.findTrucksCurrent = function(request, response) {
+module.exports.findTrucks = function(request, response) {
 	var date = new Date();
 	var day = date.getDay();
 	var time = date.getHours();
-	var trucksCurrent = [];
+	var address = request.body.address;
 
-	User.find({}, function(err, users) {
-		if(err) {
-			console.error('err', err); 
-		} else {
-			//looping through all the users
-			for(var i = 0; i < users.length; i++) {
-				//looping through all the locations of every user
-				for(var j = 0; j < users[i].locations.length; j++) {
-					//if user is working today
-					if(users[i].locations[j].hours[day]) {
-						//if user is working within current hour
-						if(users[i].locations[j].hours[day][0] <= time && users[i].locations[j].hours[day][1] >= time) {
-							trucksCurrent.push(users[i]);
+	sendRequest(address, function(longitude, latitude) {
+
+		User.find({}, function(err, users) {
+			if(err) {
+				console.error('err', err); 
+			} else {
+				var trucks = [];				
+				//looping through all the users
+				for(var i = 0; i < users.length; i++) {
+					//looping through all the locations of every user
+					for(var j = 0; j < users[i].locations.length; j++) {
+						//check if user is working today
+						if(!users[i].locations[j].hours[day]) {
+							continue;
 						}
+						//check if user is working within current hour
+						if(users[i].locations[j].hours[day][0] <= time && users[i].locations[j].hours[day][1] >= time) {
+							//get geolocation of the truck
+							thisLongitude = users[i].locations[j].longitude;
+							thisLatitude = users[i].locations[j].latitude;
+							//calculate distance between user and this truck
+							var distance = getDistance(latitude, longitude, thisLatitude, thisLongitude);
+							//sending current address information to the client
+							var copy = JSON.parse(JSON.stringify(users[i]));
+							copy.currentAddress = users[i].locations[j].address;
+							copy.currentLongitude = users[i].locations[j].longitude;
+							copy.currentLatitude = users[i].locations[j].latitude;
+							copy.distance = distance;
 
+							trucks.push(copy);
+						}						
 					}
 				}
+				response.status(201).send(trucks);
 			}
+		})
 
-				console.log('trucksCurrent', trucksCurrent)
-
-		}
-	})
-
-	return trucksCurrent;
+	});
 }
 
 module.exports.createToken = createToken = function(response, id) {
@@ -151,4 +165,39 @@ module.exports.verifyToken = verifyToken = function(request, response, next) {
 		response.status(401).send("Not authorized.")
 	}
 };
+
+
+var getDistance = function(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p)/2 +
+    c(lat1 * p) * c(lat2 * p) *
+    (1 - c((lon2 - lon1) * p))/2;
+    // returns distance in miles
+    return Math.round(12742 * Math.asin(Math.sqrt(a))/1.60932*10)/10;
+  }
+
+var sendRequest = function(address, callback) {
+	//TODO put into config.js
+	var APIkey = "AIzaSyBcK8gSnEXC4SgWTsNwKOO8eeYnFmK5t8A";
+	var query = "https://maps.googleapis.com/maps/api/geocode/json?address="+ address +"&key=" + APIkey;
+
+	https.get(query, function(res) {
+		var body = "";
+		res.on('data', function(chunk) {
+			body += chunk;
+		});
+		res.on('end', function(error) {
+			if(error) {	
+				console.log(error)				
+			} else {
+				//get current address's longitude latitude
+				var result = JSON.parse(body);
+				longitude = result.results[0].geometry.location.lng;
+				latitude = result.results[0].geometry.location.lat;
+				callback(longitude, latitude);
+			}
+		})
+	})
+}
 
