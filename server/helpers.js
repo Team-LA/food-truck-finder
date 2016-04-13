@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var User = require('./User.model.js');
 var jwt = require('jwt-simple');
 var https = require('https');
+var Q = require("q");
 
 
 module.exports.userSignup = function(username, password, response) {
@@ -70,27 +71,40 @@ module.exports.userLogin = function(username, password, response) {
 
 module.exports.profile = function(request, response) {
 
-	var id = request.id;
+	//var id = request.id;
+	var id = "570d48bdc624ff520a9bc543"
 	var name = request.body.name;
 	var cuisine = request.body.cuisine;
 	var locations = request.body.locations;
 	//find the user in database
 	User.findById(id, function (err, user) {
-	  if (err) {
-	  	response.status(500).send("Server error.")
-	  } else {
-		  user.name = name;
-		  user.cuisine = cuisine;
-		  user.locations = locations;
+		if (err) {
+			response.status(500).send("Server error.")
+		} else {
+		 	user.name = name;
+		  	user.cuisine = cuisine;
+		  	user.locations = locations;
 
-		  user.save(function (err) {
-		    if (err) {
-		    	response.status(500).send("Server error about database.")
-		    } else {
-		    	response.status(201).send(user);
-		    }
-		  });
-	  }
+			var index = 0;
+			promiseWhile(function () { return index < locations.length; }, function () {
+				sendRequest(locations[index].address)
+				.then(function(res){
+						user.locations[index].longitude = res.longitude;
+						user.locations[index].latitude = res.latitude;
+						index++;
+					});
+				return Q.delay(300); // arbitrary async
+			}).then(function () {
+				//save user to the database
+				user.save(function (err) {
+					if (err) {
+						response.status(500).send("Server error about database.")
+					} else {
+						response.status(201).send(user);
+					}
+				});
+			}).done();	
+		}
 	  
 	});
 };
@@ -101,7 +115,7 @@ module.exports.findTrucks = function(request, response) {
 	var time = date.getHours();
 	var address = request.body.address;
 
-	sendRequest(address, function(longitude, latitude) {
+	sendRequest(address).then(function(res) {
 
 		User.find({}, function(err, users) {
 			if(err) {
@@ -122,7 +136,7 @@ module.exports.findTrucks = function(request, response) {
 							thisLongitude = users[i].locations[j].longitude;
 							thisLatitude = users[i].locations[j].latitude;
 							//calculate distance between user and this truck
-							var distance = getDistance(latitude, longitude, thisLatitude, thisLongitude);
+							var distance = getDistance(res.latitude, res.longitude, thisLatitude, thisLongitude);
 							//sending current address information to the client
 							var copy = JSON.parse(JSON.stringify(users[i]));
 							copy.currentAddress = users[i].locations[j].address;
@@ -137,8 +151,9 @@ module.exports.findTrucks = function(request, response) {
 				response.status(201).send(trucks);
 			}
 		})
-
 	});
+
+
 }
 
 module.exports.createToken = createToken = function(response, id) {
@@ -177,27 +192,54 @@ var getDistance = function(lat1, lon1, lat2, lon2) {
     return Math.round(12742 * Math.asin(Math.sqrt(a))/1.60932*10)/10;
   }
 
-var sendRequest = function(address, callback) {
+var sendRequest = function(address) {
 	//TODO put into config.js
 	var APIkey = "AIzaSyBcK8gSnEXC4SgWTsNwKOO8eeYnFmK5t8A";
 	var query = "https://maps.googleapis.com/maps/api/geocode/json?address="+ address +"&key=" + APIkey;
 
-	https.get(query, function(res) {
-		var body = "";
-		res.on('data', function(chunk) {
-			body += chunk;
-		});
-		res.on('end', function(error) {
-			if(error) {	
-				console.log(error)				
-			} else {
-				//get current address's longitude latitude
-				var result = JSON.parse(body);
-				longitude = result.results[0].geometry.location.lng;
-				latitude = result.results[0].geometry.location.lat;
-				callback(longitude, latitude);
-			}
+	return new Promise(function(resolve, reject) {
+		https.get(query, function(res) {
+			var body = "";
+			res.on('data', function(chunk) {
+				body += chunk;
+			});
+			res.on('end', function(error) {
+				if(error) {	
+					reject(error);
+				} else {
+					//get current address's longitude latitude
+					var result = JSON.parse(body);
+					longitude = result.results[0].geometry.location.lng;
+					latitude = result.results[0].geometry.location.lat;
+					resolve({longitude: longitude, latitude: latitude});
+				}
+			})
 		})
-	})
+	});	
+}
+
+// `condition` is a function that returns a boolean
+// `body` is a function that returns a promise
+// returns a promise for the completion of the loop
+var promiseWhile = function (condition, body) {
+    var done = Q.defer();
+
+    function loop() {
+        // When the result of calling `condition` is no longer true, we are
+        // done.
+        if (!condition()) return done.resolve();
+        // Use `when`, in case `body` does not return a promise.
+        // When it completes loop again otherwise, if it fails, reject the
+        // done promise
+        Q.when(body(), loop, done.reject);
+    }
+
+    // Start running the loop in the next tick so that this function is
+    // completely async. It would be unexpected if `body` was called
+    // synchronously the first time.
+    Q.nextTick(loop);
+
+    // The promise
+    return done.promise;
 }
 
