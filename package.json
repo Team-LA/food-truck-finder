@@ -36,6 +36,6 @@
     "morgan": "^1.1.1",
     "request": "^2.36.0",
     "babel-preset-stage-1": "^6.1.18",
-    "lodash": "^3.10.1",
+    "lodash": "^3.10.1"
   }
 }
