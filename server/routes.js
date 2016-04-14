@@ -3,35 +3,19 @@ var router = require('express').Router();
 var parser = require('body-parser');
 var User = require('./User.model.js'); 
 var helpers = require('./helpers.js');
+var parser = require('body-parser');
+
+router.use(parser.json());
+router.use(parser.urlencoded({ extended: true }));
+
 
 var mongoose = require('mongoose');
-//TODO: put into config
-mongoose.connect('mongodb://shzoechen:203252@ds017070.mlab.com:17070/foodtrucks');
+var url = require('./config.js').url;
+mongoose.connect(url);
 var db = mongoose.connection;
-//entering sample data
-// var user = new User({
-// 		name: "Vons",
-// 		username: "von",
-// 		password: "von",
-// 		image: "http",
-// 		cuisine: "italy",
-// 		//locations: []
-// });
-
-// user.locations.push({address: "san diago", longitude: 34.0210418, latitude: -118.492224, hours: {1: [15, 17]} });
-// user.locations.push({address: "san fransico", longitude: 234, latitude: 23, hours: { 2: [15, 17]} });
-
-// user.save(function(err, data) {
-// 	if(err) console.log(err);
-// 	else {
-// 		console.log('success');
-// 	}
-// });
-
-//TODO: WHY?
-// router.get('/', function(req, res) {
-//   res.send('Birds home page');
-// });
+//One Time Only, to import init data
+// var saveInitData = require('./initData.js');
+// saveInitData();
 
 router.post('/signup', function(request, response) {
 

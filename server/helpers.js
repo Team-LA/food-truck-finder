@@ -72,7 +72,7 @@ module.exports.userLogin = function(username, password, response) {
 module.exports.profile = function(request, response) {
 
 	//var id = request.id;
-	var id = "570d48bdc624ff520a9bc543"
+	var id = "570fcadf4763551b1fcafe03"
 	var name = request.body.name;
 	var cuisine = request.body.cuisine;
 	var locations = request.body.locations;
@@ -159,8 +159,7 @@ module.exports.findTrucks = function(request, response) {
 module.exports.createToken = createToken = function(response, id) {
 
 	var payload = {id: id};
-	//TODO in config.js
-	var secret = "mksgreenfieldproject";
+	var secret = require('./config.js').tokenSecret;
 	var token = jwt.encode(payload, secret);
 
 	response.set('token', token).status(201).json({token: token});
@@ -193,8 +192,8 @@ var getDistance = function(lat1, lon1, lat2, lon2) {
   }
 
 var sendRequest = function(address) {
-	//TODO put into config.js
-	var APIkey = "AIzaSyBcK8gSnEXC4SgWTsNwKOO8eeYnFmK5t8A";
+
+	var APIkey = require('./config.js').googleAPIkey;
 	var query = "https://maps.googleapis.com/maps/api/geocode/json?address="+ address +"&key=" + APIkey;
 
 	return new Promise(function(resolve, reject) {
@@ -221,7 +220,7 @@ var sendRequest = function(address) {
 // `condition` is a function that returns a boolean
 // `body` is a function that returns a promise
 // returns a promise for the completion of the loop
-var promiseWhile = function (condition, body) {
+module.exports.promiseWhile = promiseWhile = function (condition, body) {
     var done = Q.defer();
 
     function loop() {
