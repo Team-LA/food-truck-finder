@@ -8,7 +8,9 @@ idea
 logs/
 *.log
 npm-debug.log*
-
+package.json
+server.js
+webpack.config
 
 
 
