@@ -1,41 +1,21 @@
 var express = require('express');
 var router = require('express').Router();
 var parser = require('body-parser');
-var User = require('./User.model.js');
+var User = require('./User.model.js'); 
 var helpers = require('./helpers.js');
+var parser = require('body-parser');
+
+router.use(parser.json());
+router.use(parser.urlencoded({ extended: true }));
+
 
 var mongoose = require('mongoose');
-//TODO: put into config
-mongoose.connect('mongodb://shzoechen:203252@ds017070.mlab.com:17070/foodtrucks');
+var url = require('./config.js').url;
+mongoose.connect(url);
 var db = mongoose.connection;
-//entering sample data
-var user = new User({
-		name: "Vons",
-		username: "von",
-		password: "von",
-		image: "http",
-		cuisine: "italy",
-		locations: [{address: "california", loc: {type: 'points', coordinates: [34.0210418, -118.492224]}, hours: [{1: [8, 17]}]},
-		{address: "new york", longitude: 234, latitude: 23, hours: [{ 2: [8, 17]}]}
-		]
-});
-
-user.save(function(err, data) {
-	if(err) console.log(err);
-	else {
-		console.log('success');
-	}
-});
-
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-//TODO: WHY?
-// router.get('/', function(req, res) {
-//   res.send('Birds home page');
-// });
+//One Time Only, to import init data
+// var saveInitData = require('./initData.js');
+// saveInitData();
 
 router.post('/signup', function(request, response) {
 
@@ -63,19 +43,15 @@ router.post('/login', function(request, response) {
 	}
 });
 
-router.post('/profile', helpers.verifyToken, function(request, response) {
+router.post('/profile', function(request, response) {
 	//save updated data in database
 	helpers.profile(request, response);
 });
 
 
-router.get('/findTrucks', function(request, response) {
-	// var date = request.body.date;
-	// var time = request.body.time;
-	// var longitude = request.body.longitude;
-	// var latitude = request.body.latitude;
-	console.log('in findTrucks')
-	var trucks = helpers.findTrucksCurrent(request, response);
+router.post('/findTrucks', function(request, response) {
+
+	helpers.findTrucks(request, response);
 });
 
 router.get('/logout', function(request, response) {
