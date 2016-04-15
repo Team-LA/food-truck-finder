@@ -291,8 +291,7 @@ var iniData = [
 	     {
 	     "latitude": 34.002317,
      	 "longitude": -118.483915,
-	     "address": "Ocean Park Blvd & Main St, Santa Monica, CA 90405
-", 
+	     "address": "Ocean Park Blvd & Main St, Santa Monica, CA 90405", 
 	     "hours":{
 	         "1": [8,18]
 	         }
