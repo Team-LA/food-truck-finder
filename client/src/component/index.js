@@ -1,0 +1,7 @@
+export MasterPage from './MasterPage'
+export IndexPage from './IndexPage'
+export LoginPage from './LoginPage'
+export RegisterPage from './RegisterPage'
+export TruckListView from './TruckListView'
+export ProfileSetupPage from './ProfileSetupPage'
+export ProfilePage from './ProfilePage'
