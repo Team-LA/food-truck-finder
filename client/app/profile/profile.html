@@ -1,0 +1,335 @@
+<div>
+    <p>name: {{user.name}}</p>
+</div>
+
+<form>
+<label>Enter your truck name</label>
+  <input type="text" name="name" ng-model="name"><br>
+  <label>Upload your truck image</label>
+  <input type="file"><br>
+  <label for="cuisine">Cuisine</label>
+  <select id="cuisine" ng-model="cuisine">
+    <option value="american">American</option>
+    <option value="mexican">Mexican</option>
+    <option value="japanese">Japanese</option>
+    <option value="italian">Italian</option>
+    <option value="thai">Thai</option>
+    <option value="indian">Indian</option>
+    <option value="french">French</option>
+    <option value="vietnamese">Vietnamese</option>
+    <option value="chinese">Chinese</option>
+    <option value="mediterranean">Mediterranean</option>
+  </select><br>
+  <label>Select your truck location</label><br>
+  <input type="text" placeholder="Enter your address" ng-model="address"><br>
+  <label>Select your business hours</label><br>
+  <label>Mon: </label>
+  <select id="start" ng-model="start1">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end1">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Tue: </label>
+  <select id="start" ng-model="start2">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end2">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Wed: </label>
+  <select id="start" ng-model="start3">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end3">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Thr: </label>
+  <select id="start" ng-model="start4">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end4">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Fri: </label>
+  <select id="start" ng-model="start5">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end5">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Sat: </label>
+  <select id="start" ng-model="start6">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end6">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <label>Sun: </label>
+  <select id="start" ng-model="start7">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select>
+  <span> - </span>
+  <select id="end" ng-model="end7">
+    <option value="0">12AM</option>
+    <option value="6">6AM</option>
+    <option value="7">7AM</option>
+    <option value="8">8AM</option>
+    <option value="9">9AM</option>
+    <option value="10">10AM</option>
+    <option value="11">11AM</option>
+    <option value="12">12PM</option>
+    <option value="13">1PM</option>
+    <option value="14">2PM</option>
+    <option value="15">3PM</option>
+    <option value="16">4PM</option>
+    <option value="17">5PM</option>
+    <option value="18">6PM</option>
+    <option value="19">7PM</option>
+    <option value="20">8PM</option>
+    <option value="21">9PM</option>
+    <option value="22">10PM</option>
+    <option value="23">11PM</option>
+  </select><br>
+  <button ng-click="onClick()">Submit</button>
+</form>

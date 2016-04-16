@@ -27,7 +27,9 @@ module.exports.userSignup = function(username, password, response) {
 						response.status(500).send("Server error.")
 
 					} else {
-						response.status(201).send("User added.");
+						console.log("user is added.")
+						createToken(response, user.id);
+						//response.status(201).send("User added.");
 					}
 				})
 			} else {
@@ -71,8 +73,8 @@ module.exports.userLogin = function(username, password, response) {
 
 module.exports.profile = function(request, response) {
 
-	//var id = request.id;
-	var id = "570fcadf4763551b1fcafe03"
+	var id = request.id;
+	//var id = "570fcadf4763551b1fcafe03"
 	var name = request.body.name;
 	var cuisine = request.body.cuisine;
 	var locations = request.body.locations;
@@ -161,7 +163,7 @@ module.exports.createToken = createToken = function(response, id) {
 	var payload = {id: id};
 	var secret = require('./config.js').tokenSecret;
 	var token = jwt.encode(payload, secret);
-
+	console.log("in createToken")
 	response.set('token', token).status(201).json({token: token});
 };
 

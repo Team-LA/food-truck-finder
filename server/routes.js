@@ -31,7 +31,7 @@ router.post('/signup', function(request, response) {
 });
 
 router.post('/login', function(request, response) {
-
+	console.log('got from client')
 	var username = request.body.username;
 	var password = request.body.password; 
 	//check if both username and password are filled in.
@@ -43,7 +43,7 @@ router.post('/login', function(request, response) {
 	}
 });
 
-router.post('/profile', function(request, response) {
+router.post('/profile', helpers.verifyToken, function(request, response) {
 	//save updated data in database
 	helpers.profile(request, response);
 });
